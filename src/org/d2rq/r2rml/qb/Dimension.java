@@ -80,6 +80,16 @@ public class Dimension {
 		}
 	}
 
+	
+
+	public String getAsMapping( Cube cube) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -112,4 +122,9 @@ public class Dimension {
 		this.nick = nick;
 	}
 
+
+	public Boolean validate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
