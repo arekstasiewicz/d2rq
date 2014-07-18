@@ -24,10 +24,6 @@ import org.d2rq.r2rml.qb.R2RMLQBParser;
 public class qb_extension extends CommandLineTool {
 	private final static Log log = LogFactory.getLog(qb_extension.class);
 
-	private final static int DUMP_DEFAULT_FETCH_SIZE = 500;
-
-	private static R2RMLQBParser parser;
-
 	public static void main(String[] args) {
 		new qb_extension().process(args);
 	}
