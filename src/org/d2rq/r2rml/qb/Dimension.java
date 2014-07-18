@@ -11,10 +11,10 @@ public class Dimension {
 	private String column = null;
 	private String nick = null;
 
-	private static final String DEFAULT_LABEL = "default-label";
-	private static final String DEFAULT_URI = "default-uri";
-	private static final String DEFAULT_COLUMN = "default-column";
-	private static final String DEFAULT_NICK = "default-nick";
+	private static final String DEFAULT_LABEL = "default-dimension-label";
+	private static final String DEFAULT_URI = "default-dimension-uri";
+	private static final String DEFAULT_COLUMN = "default-dimension-column";
+	private static final String DEFAULT_NICK = "default-dimension-nick";
 	
 	public static String NEW_LINE = System.getProperty("line.separator");
 
@@ -120,10 +120,20 @@ public class Dimension {
 		result.append("    rr:predicate skos:notation;" + NEW_LINE);
 		result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ];" + NEW_LINE);
 		result.append("  ];" + NEW_LINE);
-		
+		result.append("." + NEW_LINE);
+
 		result.append(NEW_LINE);
 		
-		result.append("." + NEW_LINE);
+		if ( getLabel().length() != 0 ){
+			
+			result.append("  rr:predicateObjectMap [" + NEW_LINE);
+			result.append("    rr:predicate skos:prefLabel;" + NEW_LINE);
+			result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ; rr:language \"en\" ];" + NEW_LINE);
+			result.append("  ];" + NEW_LINE);
+			result.append("." + NEW_LINE);
+
+			result.append(NEW_LINE);
+		}
 
 		return result.toString();
 
@@ -170,7 +180,7 @@ public class Dimension {
 	}
 
 	public Boolean validate() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 }
