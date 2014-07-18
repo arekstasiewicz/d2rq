@@ -3,19 +3,7 @@ package d2rq;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
 
 import jena.cmdline.ArgDecl;
 import jena.cmdline.CommandLine;
@@ -23,20 +11,9 @@ import jena.cmdline.CommandLine;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.d2rq.CommandLineTool;
-import org.d2rq.CompiledMapping;
-import org.d2rq.D2RQException;
-import org.d2rq.ResourceCollection;
 import org.d2rq.SystemLoader;
-import org.d2rq.db.SQLConnection;
 import org.d2rq.lang.D2RQReader;
-import org.d2rq.mapgen.MappingGenerator;
-import org.d2rq.mapgen.OntologyTarget;
 import org.d2rq.r2rml.qb.R2RMLQBParser;
-import org.d2rq.r2rml.qb.R2RMLQBWriter;
-
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFWriter;
-import com.hp.hpl.jena.shared.NoWriterForLangException;
 
 /**
  * Command line interface for Data Cube mapping generator
@@ -85,12 +62,6 @@ public class qb_extension extends CommandLineTool {
 
 	}
 
-	/*
-	 *  1. load & parse extended-mapping
-	 *  2. generate DSD 
-	 *  3. generate proper R2RML mapping 
-	 *  4. output
-	 */
 	public void run(CommandLine cmd, SystemLoader loader) throws IOException {
 
 		String mappingFile;
@@ -117,7 +88,6 @@ public class qb_extension extends CommandLineTool {
 			log.info("Writing to stdout");
 			out = System.out;
 		}
-
 		
 		R2RMLQBParser parser = new R2RMLQBParser(mappingFile);
 		out.println( parser.generateMapping() );
