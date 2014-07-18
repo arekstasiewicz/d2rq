@@ -8,17 +8,19 @@ public class Dimension {
 	private int id = 0;
 	private String label = null;
 	private String uri = null;
+	private String column = null;
 	private String nick = null;
 
 	private static final String DEFAULT_LABEL = "default-label";
 	private static final String DEFAULT_URI = "default-uri";
+	private static final String DEFAULT_COLUMN = "default-column";
 	private static final String DEFAULT_NICK = "default-nick";
-
 	
+	public static String NEW_LINE = System.getProperty("line.separator");
+
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder();
-		String NEW_LINE = System.getProperty("line.separator");
 
 		result.append(this.getClass().getName() + " Dimension {" + NEW_LINE);
 		result.append(" ID: " + id + NEW_LINE);
@@ -29,8 +31,7 @@ public class Dimension {
 
 		return result.toString();
 	}
-	  
-	  
+
 	public Dimension(int id, Node node) {
 
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -41,6 +42,7 @@ public class Dimension {
 
 			String label;
 			String uri;
+			String column;
 			String nick;
 
 			try {
@@ -64,6 +66,16 @@ public class Dimension {
 			}
 
 			try {
+				column = eElement.getElementsByTagName("column").item(0)
+						.getTextContent();
+			} catch (NullPointerException e) {
+				System.err.println("Dimension " + id
+						+ " is not a valid, column is missing.");
+				System.err.println("Setting default value.");
+				column = DEFAULT_COLUMN + "-" + getId();
+			}
+
+			try {
 				nick = eElement.getElementsByTagName("nick").item(0)
 						.getTextContent();
 			} catch (NullPointerException e) {
@@ -75,21 +87,48 @@ public class Dimension {
 
 			setLabel(label);
 			setUri(uri);
+			setColumn(column);
 			setNick(nick);
 
 		}
 	}
 
-	
+	public String getAsMapping(Cube cube) {
+		
+		StringBuilder result = new StringBuilder();
 
-	public String getAsMapping( Cube cube) {
-		// TODO Auto-generated method stub
-		return null;
+		result.append("map:dimension-" + getLabel() + NEW_LINE );
+		
+		result.append("  rr:logicalTable [ " + NEW_LINE);
+		result.append("    rr:sqlQuery \"\"\"" + NEW_LINE);
+		result.append("      SELECT DISTINCT" + NEW_LINE);
+		result.append("        " + getColumn() + NEW_LINE);
+		result.append("      FROM " + cube.getTable() + NEW_LINE);
+		result.append("    \"\"\"" + NEW_LINE);
+		result.append("  ];" + NEW_LINE);
+		
+		result.append(NEW_LINE);
+
+		result.append("  rr:subjectMap [" + NEW_LINE);
+		result.append("    rr:template 'classification/{\"" + getColumn() + "\"}';" + NEW_LINE);
+		result.append("    rr:class skos:Concept;" + NEW_LINE);
+		result.append("  ];" + NEW_LINE);
+		
+		result.append(NEW_LINE);
+	
+		result.append("  rr:predicateObjectMap [" + NEW_LINE);
+		result.append("    rr:predicate skos:notation;" + NEW_LINE);
+		result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ];" + NEW_LINE);
+		result.append("  ];" + NEW_LINE);
+		
+		result.append(NEW_LINE);
+		
+		result.append("." + NEW_LINE);
+
+		return result.toString();
+
 	}
-	
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -114,6 +153,14 @@ public class Dimension {
 		this.uri = uri;
 	}
 
+	public String getColumn() {
+		return column;
+	}
+
+	public void setColumn(String column) {
+		this.column = column;
+	}
+
 	public String getNick() {
 		return nick;
 	}
@@ -121,7 +168,6 @@ public class Dimension {
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
-
 
 	public Boolean validate() {
 		// TODO Auto-generated method stub

@@ -30,8 +30,7 @@ public class Cube {
 		return result.toString();
 	}
 	  
-	  
-	public Cube(int id, Node node) {
+	public Cube(Node node) {
 
 		if (node.getNodeType() == Node.ELEMENT_NODE) {
 
@@ -80,15 +79,12 @@ public class Cube {
 		}
 	}
 
-	
 
-	public String getAsMapping( Cube cube) {
+	public String getAsMapping(Cube cube) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-	
+
 	
 	public int getId() {
 		return id;
