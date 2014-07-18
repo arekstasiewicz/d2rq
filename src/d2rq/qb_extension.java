@@ -42,6 +42,9 @@ public class qb_extension extends CommandLineTool {
 		System.err
 				.println("    -o outfile.ttl  Output file name (default: stdout)");
 		System.err.println("    --verbose       Print debug information");
+		System.err
+		.println("    --demo          generate sample mapping to the output file");
+
 		System.err.println();
 		System.exit(1);
 
@@ -49,29 +52,20 @@ public class qb_extension extends CommandLineTool {
 
 	private ArgDecl baseArg = new ArgDecl(true, "b", "base");
 	private ArgDecl outfileArg = new ArgDecl(true, "o", "out", "outfile");
+	private ArgDecl demoArg = new ArgDecl(false, "demo");
 
 	public void initArgs(CommandLine cmd) {
 		cmd.add(baseArg);
+		cmd.add(demoArg);
 		cmd.add(outfileArg);
 
-		setMinMaxArguments(1, 1);
+		setMinMaxArguments(0, 1);
 
 	}
 
 	public void run(CommandLine cmd, SystemLoader loader) throws IOException {
 
 		String mappingFile;
-
-		if (cmd.numItems() == 1) {
-			mappingFile = cmd.getItem(0);
-		} else {
-			loader.setJdbcURL(cmd.getItem(0));
-			mappingFile = cmd.getItem(1);
-		}
-
-		if (cmd.hasArg(baseArg)) {
-			loader.setSystemBaseURI(cmd.getArg(baseArg).getValue());
-		}
 
 		PrintStream out;
 		if (cmd.hasArg(outfileArg)) {
@@ -83,6 +77,22 @@ public class qb_extension extends CommandLineTool {
 		} else {
 			log.info("Writing to stdout");
 			out = System.out;
+		}
+
+		if (cmd.hasArg(demoArg)) {
+			out.print( R2RMLQBParser.generateSampleMapping() );
+			System.exit(0);
+		}
+		
+		if (cmd.numItems() == 1) {
+			mappingFile = cmd.getItem(0);
+		} else {
+			loader.setJdbcURL(cmd.getItem(0));
+			mappingFile = cmd.getItem(1);
+		}
+
+		if (cmd.hasArg(baseArg)) {
+			loader.setSystemBaseURI(cmd.getArg(baseArg).getValue());
 		}
 		
 		R2RMLQBParser parser = new R2RMLQBParser(mappingFile);
