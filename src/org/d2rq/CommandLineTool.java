@@ -97,10 +97,11 @@ public abstract class CommandLineTool {
 
 		if (supportImplicitJdbcURL && cmd.hasArg(sqlFileArg)) {
 			loader.setJdbcURL(SystemLoader.DEFAULT_JDBC_URL);
-		} else if (cmd.numItems() == 0) {
+		} else if (cmd.numItems() == 0 && minArguments != 0) {
 			usage();
 			System.exit(1);
 		}
+
 		if (cmd.numItems() < minArguments) {
 			reportException(new IllegalArgumentException("Not enough arguments"));
 		} else if (cmd.numItems() > maxArguments) {
