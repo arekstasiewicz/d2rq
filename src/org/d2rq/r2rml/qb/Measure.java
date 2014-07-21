@@ -75,7 +75,6 @@ public class Measure {
 				uri = DEFAULT_URI + "-" + getId();
 			}
 
-
 			try {
 				datatype = eElement.getElementsByTagName("datatype").item(0)
 						.getTextContent();
@@ -123,7 +122,17 @@ public class Measure {
 		result.append("  ];" + NEW_LINE);
 		
 		result.append(NEW_LINE);
-		
+
+		if ( getLabel().length() != 0 ){
+			
+			result.append("  rr:predicateObjectMap [" + NEW_LINE);
+			result.append("    rr:predicate skos:prefLabel;" + NEW_LINE);
+			result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ; rr:language \"en\" ];" + NEW_LINE);
+			result.append("  ];" + NEW_LINE);
+			result.append("." + NEW_LINE);
+
+			result.append(NEW_LINE);
+		}
 		result.append("." + NEW_LINE);
 
 		return result.toString();
@@ -180,6 +189,5 @@ public class Measure {
 	public void setDatatype(String datatype) {
 		this.datatype = datatype;
 	}
-
 
 }
