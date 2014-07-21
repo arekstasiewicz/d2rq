@@ -46,7 +46,7 @@ public class Cube {
 			String pattern;
 
 			try {
-				table = eElement.getElementsByTagName("table").item(0)
+				table = eElement.getElementsByTagName("table-name").item(0)
 						.getTextContent();
 			} catch (NullPointerException e) {
 				System.err.println("Cube " + id
@@ -91,13 +91,6 @@ public class Cube {
 			setPattern(pattern);
 		}
 	}
-
-
-	public String getAsMapping(Cube cube) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public int getId() {
 		return id;
