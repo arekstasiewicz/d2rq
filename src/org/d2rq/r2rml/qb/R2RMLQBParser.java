@@ -116,15 +116,9 @@ public class R2RMLQBParser {
 		StringBuilder result = new StringBuilder();
 
 		result.append( generatePrefixList() );
-		result.append("# ^-- prefixes # # # # # # # # # #" + NEW_LINE);
-		result.append( generateObservations() + NEW_LINE);
-		result.append("# ^-- observations # # # # # # # # # #" + NEW_LINE);		
+		result.append( generateObservations() + NEW_LINE);	
 		result.append( generateDimensionsList() + NEW_LINE);
-		result.append("# ^-- dimensions # # # # # # # # # #" + NEW_LINE);
 		result.append( generateMeasuresList() + NEW_LINE);
-		result.append("# ^-- measures # # # # # # # # # #" + NEW_LINE);
-		result.append( generateDataStructure() + NEW_LINE);
-		result.append("# ^-- data structure # # # # # # # # # #" + NEW_LINE);
 
 		return result.toString();
 	}

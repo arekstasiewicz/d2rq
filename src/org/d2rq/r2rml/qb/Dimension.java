@@ -144,7 +144,7 @@ public class Dimension {
 		
 		result.append("  rr:predicateObjectMap [" + NEW_LINE);
 		result.append("    rr:predicate [ rr:template 'property/" + getProperty() + "'; ];" + NEW_LINE);
-		result.append("    rr:objectMap [ rr:template 'classification/" + getProperty() + "/" + getColumn() + "'; ];" + NEW_LINE);
+		result.append("    rr:objectMap [ rr:template 'classification/" + getProperty() + "/{\"" + getColumn() + "\"}'; ];" + NEW_LINE);
 		result.append("  ];" + NEW_LINE);
 		
 		return result.toString();

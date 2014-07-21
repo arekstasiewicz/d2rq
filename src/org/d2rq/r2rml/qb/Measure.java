@@ -129,7 +129,6 @@ public class Measure {
 			result.append("    rr:predicate skos:prefLabel;" + NEW_LINE);
 			result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ; rr:language \"en\" ];" + NEW_LINE);
 			result.append("  ];" + NEW_LINE);
-			result.append("." + NEW_LINE);
 
 			result.append(NEW_LINE);
 		}
@@ -144,7 +143,7 @@ public class Measure {
 
 		result.append("  rr:predicateObjectMap [" + NEW_LINE);
 		result.append("    rr:predicate <" + getUri() + ">;" + NEW_LINE);
-		result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ]; rr:datatype: " + getDatatype() + "];" + NEW_LINE);
+		result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ; rr:datatype " + getDatatype() + "];" + NEW_LINE);
 		result.append("  ];" + NEW_LINE);
 		
 		return result.toString();
