@@ -97,7 +97,7 @@ public class Measure {
 		
 		StringBuilder result = new StringBuilder();
 
-		result.append("map:dimension-" + getLabel() + NEW_LINE );
+		result.append("map:dimension-" + getUri() + NEW_LINE );
 		
 		result.append("  rr:logicalTable [ " + NEW_LINE);
 		result.append("    rr:sqlQuery \"\"\"" + NEW_LINE);
@@ -139,7 +139,7 @@ public class Measure {
 
 	}
 
-	public Object getForObservations() {
+	public String getForObservations() {
 		StringBuilder result = new StringBuilder();
 
 		result.append("  rr:predicateObjectMap [" + NEW_LINE);
