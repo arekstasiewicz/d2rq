@@ -9,12 +9,12 @@ public class Dimension {
 	private String label = null;
 	private String uri = null;
 	private String column = null;
-	private String nick = null;
+	private String property = null;
 
 	private static final String DEFAULT_LABEL = "default-dimension-label";
 	private static final String DEFAULT_URI = "default-dimension-uri";
 	private static final String DEFAULT_COLUMN = "default-dimension-column";
-	private static final String DEFAULT_NICK = "default-dimension-nick";
+	private static final String DEFAULT_PROPERTY = "default-dimension-property";
 	
 	public static String NEW_LINE = System.getProperty("line.separator");
 
@@ -26,7 +26,7 @@ public class Dimension {
 		result.append(" ID: " + id + NEW_LINE);
 		result.append(" Label: " + label + NEW_LINE);
 		result.append(" URI: " + uri + NEW_LINE);
-		result.append(" Nick: " + nick + NEW_LINE);
+		result.append(" Property: " + property + NEW_LINE);
 		result.append("}");
 
 		return result.toString();
@@ -43,7 +43,7 @@ public class Dimension {
 			String label;
 			String uri;
 			String column;
-			String nick;
+			String property;
 
 			try {
 				label = eElement.getElementsByTagName("label").item(0)
@@ -76,19 +76,19 @@ public class Dimension {
 			}
 
 			try {
-				nick = eElement.getElementsByTagName("nick").item(0)
+				property = eElement.getElementsByTagName("property").item(0)
 						.getTextContent();
 			} catch (NullPointerException e) {
 				System.err.println("Dimension " + id
-						+ " is not a valid, nick is missing.");
+						+ " is not a valid, property is missing.");
 				System.err.println("Setting default value.");
-				nick = DEFAULT_NICK + "-" + getId();
+				property = DEFAULT_PROPERTY + "-" + getId();
 			}
 
 			setLabel(label);
 			setUri(uri);
 			setColumn(column);
-			setNick(nick);
+			setProperty(property);
 
 		}
 	}
@@ -97,7 +97,7 @@ public class Dimension {
 		
 		StringBuilder result = new StringBuilder();
 
-		result.append("map:dimension-" + getLabel() + NEW_LINE );
+		result.append("map:dimension-" + getUri() + NEW_LINE );
 		
 		result.append("  rr:logicalTable [ " + NEW_LINE);
 		result.append("    rr:sqlQuery \"\"\"" + NEW_LINE);
@@ -120,7 +120,6 @@ public class Dimension {
 		result.append("    rr:predicate skos:notation;" + NEW_LINE);
 		result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ];" + NEW_LINE);
 		result.append("  ];" + NEW_LINE);
-		result.append("." + NEW_LINE);
 
 		result.append(NEW_LINE);
 		
@@ -130,13 +129,25 @@ public class Dimension {
 			result.append("    rr:predicate skos:prefLabel;" + NEW_LINE);
 			result.append("    rr:objectMap [ rr:column '\"" + getColumn() + "\"' ; rr:language \"en\" ];" + NEW_LINE);
 			result.append("  ];" + NEW_LINE);
-			result.append("." + NEW_LINE);
 
 			result.append(NEW_LINE);
 		}
+		
+		result.append("." + NEW_LINE);
 
 		return result.toString();
 
+	}
+
+	public String getForObservations() {
+		StringBuilder result = new StringBuilder();
+		
+		result.append("  rr:predicateObjectMap [" + NEW_LINE);
+		result.append("    rr:predicate [ rr:template 'property/" + getProperty() + "'; ];" + NEW_LINE);
+		result.append("    rr:objectMap [ rr:template 'classification/" + getProperty() + "/" + getColumn() + "'; ];" + NEW_LINE);
+		result.append("  ];" + NEW_LINE);
+		
+		return result.toString();
 	}
 
 	public int getId() {
@@ -171,16 +182,17 @@ public class Dimension {
 		this.column = column;
 	}
 
-	public String getNick() {
-		return nick;
+	public String getProperty() {
+		return property;
 	}
 
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setProperty(String property) {
+		this.property = property;
 	}
 
 	public Boolean validate() {
 		// TODO
 		return null;
 	}
+
 }
