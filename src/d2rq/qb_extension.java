@@ -65,7 +65,7 @@ public class qb_extension extends CommandLineTool {
 
 	public void run(CommandLine cmd, SystemLoader loader) throws IOException {
 
-		String mappingFile;
+		String mappingFile = null;
 
 		PrintStream out;
 		if (cmd.hasArg(outfileArg)) {
@@ -87,8 +87,8 @@ public class qb_extension extends CommandLineTool {
 		if (cmd.numItems() == 1) {
 			mappingFile = cmd.getItem(0);
 		} else {
-			loader.setJdbcURL(cmd.getItem(0));
-			mappingFile = cmd.getItem(1);
+			usage();
+			System.exit(0);
 		}
 
 		if (cmd.hasArg(baseArg)) {
