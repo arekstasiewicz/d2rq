@@ -43,9 +43,9 @@ public class R2RMLQBParser {
 			Document doc;
 			
 			if ( isString ){
-				doc = loadMapping(mapping);
-			} else {
 				doc = loadXMLFromString(mapping);
+			} else {
+				doc = loadMapping(mapping);
 			}
 			
 			setCube(parseCube(doc));
