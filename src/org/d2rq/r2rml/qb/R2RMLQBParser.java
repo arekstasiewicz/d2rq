@@ -54,7 +54,6 @@ public class R2RMLQBParser {
 
 		} catch (org.xml.sax.SAXParseException e) {
 			System.err.println("Mapping file is not a valid XML file.");
-			System.exit(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,7 +78,6 @@ public class R2RMLQBParser {
 			cube = new Cube(nCube);
 		} catch (NullPointerException e) {
 			System.err.println("Dataset configuration is missing.");
-			System.exit(1);
 		}
 
 		return cube;
