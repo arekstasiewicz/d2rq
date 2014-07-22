@@ -2,6 +2,7 @@ package org.d2rq.r2rml.qb;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.hp.hpl.jena.graph.query.Mapping;
@@ -35,10 +37,16 @@ public class R2RMLQBParser {
 
 	public final static String NEW_LINE = System.getProperty("line.separator");
 
-	public R2RMLQBParser(String mappingFile) {
+	public R2RMLQBParser(String mapping, boolean isString) {
 
 		try {
-			Document doc = loadMapping(mappingFile);
+			Document doc;
+			
+			if ( isString ){
+				doc = loadMapping(mapping);
+			} else {
+				doc = loadXMLFromString(mapping);
+			}
 			
 			setCube(parseCube(doc));
 			setDimensions(parseDimensions(doc));
@@ -53,6 +61,14 @@ public class R2RMLQBParser {
 
 	}
 
+	public static Document loadXMLFromString(String xml) throws Exception
+	{
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    InputSource is = new InputSource(new StringReader(xml));
+	    return builder.parse(is);
+	}
+	
 	private Cube parseCube(Document doc) {
 
 		Cube cube = null;

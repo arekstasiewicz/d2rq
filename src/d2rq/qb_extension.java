@@ -95,7 +95,7 @@ public class qb_extension extends CommandLineTool {
 			loader.setSystemBaseURI(cmd.getArg(baseArg).getValue());
 		}
 		
-		R2RMLQBParser parser = new R2RMLQBParser(mappingFile);
+		R2RMLQBParser parser = new R2RMLQBParser(mappingFile, false);
 		out.println( parser.generateMapping() );
 
 	}
