@@ -275,7 +275,7 @@ public class R2RMLQBParser {
 		result.append("      <property>measure-property</property>" + NEW_LINE);
 		result.append("      <datatype>xsd:int</datatype>" + NEW_LINE);
 		result.append("    </measure>" + NEW_LINE);
-		result.append("  </measure>" + NEW_LINE);
+		result.append("  </measures>" + NEW_LINE);
 		result.append("</mapping>" + NEW_LINE);
 
 		return result.toString();
