@@ -13,7 +13,7 @@ import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.shared.impl.PrefixMappingImpl;
 
-public class R2RMLWriterQB extends R2RMLWriter {
+public class R2RMLQBWriter extends R2RMLWriter {
 	
 	private final static Set<Property> COMPACT_PROPERTIES = new HashSet<Property>(
 			Arrays.asList(new Property[]{
@@ -25,7 +25,7 @@ public class R2RMLWriterQB extends R2RMLWriter {
 	private final PrefixMapping prefixes = new PrefixMappingImpl();
 	private PrettyTurtleWriter out;
 
-	public R2RMLWriterQB(Mapping mapping) {
+	public R2RMLQBWriter(Mapping mapping) {
 		super(mapping);
 		this.mapping = mapping;
 		prefixes.setNsPrefixes(mapping.getPrefixes());
